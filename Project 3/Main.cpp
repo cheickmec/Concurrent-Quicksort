@@ -11,13 +11,10 @@ typedef std::vector<int> ArrayType;
 int main() {
 	ArrayType myarray = { 45,65,84,54,658,548,1,8,8,5 };
 	
-	SerialQuicksort<ArrayType> sorter;
+	ConcurrentQuicksort<ArrayType> sorter;
 	sorter(myarray, 0, myarray.size()-1);
 
-	for (std::size_t i = 0; i < myarray.size(); i++) {
-		std::cout << myarray[i] << " ";
-	}
-	std::cout << " count" << count;
+	sorter.show(myarray,0,myarray.size()-1);
 	return 0;
 
 }
