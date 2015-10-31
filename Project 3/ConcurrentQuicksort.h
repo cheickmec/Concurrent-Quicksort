@@ -10,23 +10,21 @@ public:
 	ConcurrentQuicksort() {};
 	virtual ~ConcurrentQuicksort() {};
 	void operator()(T& theArray, int first, int last) {
-		int i = first, j = last;
-		int tmp;
-		int pivot = theArray[(first + last) >> 1];
-		// array partition 
-		while (i <= j) {
-			while (theArray[i] < pivot)
-				i++;
-			while (theArray[j] > pivot)
-				j--;
-			if (i <= j) {
-				std::swap(theArray[i++], theArray[j--]);
+		if (first < last && last <= theArray.size()) {
+			std::size_t pivot = first;
+			//partition
+			auto pivotElem = theArray[first];
+			for (std::size_t i = first + 1; i <= last; ++i) {
+				if (theArray[i] <= pivotElem) {
+					pivot++;
+					std::swap(theArray[i], theArray[pivot]);
+				}
 			}
-		};
-		if (first < j)
-			auto fut1 = std::async(*this, std::ref(theArray), first, j);
-		if (i < last)
-			auto fut2 = std::async(*this, std::ref(theArray), i, last);
+			std::swap(theArray[pivot], theArray[first]);
+			//threading
+				auto fut1 = std::async(*this, std::ref(theArray), first, pivot-1);
+				auto fut2 = std::async(*this, std::ref(theArray), pivot+1, last);
+		}
 	}
 	void show(T& arr, int first, int last) {
 		for (int i = first; i <= last; ++i) {
