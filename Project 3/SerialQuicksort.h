@@ -9,23 +9,17 @@ public:
 	SerialQuicksort() {}
 	virtual ~SerialQuicksort() {}
 	void operator()(T& theArray, std::size_t first, std::size_t last) {
+		if (last <= first || last >= theArray.size()) return;
+		std::size_t pivot = (first + last) >> 1;
 		
-		if (first < last && last <= theArray.size()) {
-			std::size_t pivot = first;
-			//partition
-			auto pivotElem = theArray[first];
-			for (std::size_t i = first + 1; i <= last; ++i) {
-				if (theArray[i] <= pivotElem) {
-					pivot++;
-					std::swap(theArray[i],theArray[pivot]);
-				}
-			}
-			std::swap(theArray[pivot], theArray[first]);
-
-			// recursive calls
-				(*this)(theArray, first, pivot-1);
-				(*this)(theArray, pivot+1, last);
-		}
+		//partition
+		pivot = pPartition(theArray, first, last, pivot);	
+		
+		// recursive calls
+			(*this)(theArray, first, pivot-1);
+			(*this)(theArray, pivot+1, last);
+			
+		
 	}
 	////////////////////////////////////////////////////////
 	void show(T& arr, int first, int last) {
@@ -33,6 +27,20 @@ public:
 			std::cout << arr[i] << " ";
 		}
 		std::cout << std::endl;
+	}
+	////////////////////////////////////////////////////////
+	inline std::size_t pPartition(T& arr, std::size_t first, std::size_t last, std::size_t pivot) {
+		auto pivotElem = arr[pivot];
+		while (first<last) {
+			while (arr[first] < pivotElem)
+				++first;
+			while (arr[last] > pivotElem)
+				--last;
+			if (arr[first] >= arr[last]) {
+				std::swap(arr[first], arr[last]);
+			}
+		}
+		return first;
 	}
 };
 
