@@ -1,4 +1,4 @@
- 
+
 #include <random>
 #include <vector>
 #include <chrono>
@@ -43,20 +43,20 @@ int main() {
 	const std::size_t sampleSize = 10;
 	long N;
 
-	for ( N = 10; N <= 10000; N *= 10) {
+	for ( N = 10; N <= 1000000; N *= 10) {
 ////////////////////////////////////////////////////////////////////////////////
 		std::chrono::time_point<std::chrono::system_clock> start, end;
 		std::chrono::duration<double> elapsed_seconds1(0),elapsed_seconds2(0);
 		std::chrono::duration<double> diff1(0), diff2(0),max1(0),max2(0), min1(0), min2(0);
 
 //////////////////// Start Sampling  ///////////////////////////////////////////
-		ArrayType myarray1(N);
-		ArrayType myarray2(N);
-		fill_normal d;
+        ArrayType myarray1(N);
+        ArrayType myarray2(N);
+
 		elapsed_seconds1 = elapsed_seconds2 = max1 = min1 = min2 = max2 = max2 - max2;
 		///////////// Loop : Sequential	sorting ////////////////////////////////
 		for (std::size_t i = 0; i < sampleSize; ++i) {
-
+            fill_normal d;
 			for_each(myarray1.begin(), myarray1.end(), d);
 			myarray2 = myarray1;
 
@@ -68,7 +68,7 @@ int main() {
 			max1 = max1 >= (end - start) ? max1 : (end - start);
 			if (i == 0) min1 = elapsed_seconds1;
 			min1 = min1 <= (end - start) ? min1 : (end - start);
-			
+
 			/////////////// timing of concurrent ////////////////////////////////
 			start = std::chrono::system_clock::now();
 			cSorter(myarray2, 0, myarray2.size() - 1);
@@ -77,17 +77,19 @@ int main() {
 			max2 = max2 >= (end - start) ? max2 : (end - start);
 			if (i == 0) min2 = elapsed_seconds2;
 			min2 = min2 <= (end - start) ? min2 : (end - start);
+
 		}
-		
+
 		std::cout <<std::setw(18)<<std::left<< N << std::setw(15)<< min1.count() << std::setw(13) <<max1.count()<<std::setw(18)<<elapsed_seconds1.count()/sampleSize;
 		std::cout << std::setw(15) << min2.count() << std::setw(13) << max2.count() << std::setw(12) << elapsed_seconds2.count()/sampleSize;
 
 		diff1 = elapsed_seconds1 / sampleSize;
 		diff2 = elapsed_seconds2/sampleSize;
 		std::cout << "d: "<< diff1.count()/diff2.count() <<std::endl;
-		
+
 	}
 	//std::cout.close();
 	std::cout << "DONE" << std::endl;
+    std::cout << create<<std::endl;
 	return 0;
 }

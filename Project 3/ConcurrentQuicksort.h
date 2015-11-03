@@ -4,8 +4,10 @@
 #include <future>
 #include <algorithm>
 
-const int SWITCH_SIZE = 500;
-
+const unsigned long SWITCH_SIZE = 1000;
+static bool create =false;
+//pass number of threads as an argument
+//lower bound 300
 template<typename T>
 class ConcurrentQuicksort
 {
@@ -13,16 +15,19 @@ public:
 	ConcurrentQuicksort() {};
 	virtual ~ConcurrentQuicksort() {};
 	void operator()(T& theArray, std::size_t first, std::size_t last) {
+
 		if (last <= first ||  last >= theArray.size() ) return;
 		std::size_t pivot = (first + last ) >> 1;
-		
+
 		//partition
 		pivot = pPartition(theArray,first,last,pivot);
-		if ((last - first) > SWITCH_SIZE) {
-			//threading
-			auto fut1 = std::async(*this, std::ref(theArray), first, pivot);
-			//(*this)(theArray, pivot + 1, last);
-			auto fut2 = std::async(*this, std::ref(theArray), pivot + 1, last);
+
+		if ((last - first) > SWITCH_SIZE /*&& numbThreads > 0*/ ) {
+			create = true;
+			auto fut1 = std::async(std::launch::async,[&]() {return quickSort(theArray, first,pivot,--numbThreads);});
+			auto fut2 = std::async(std::launch::async,[&]() {return quickSort(theArray, pivot+1,last,--numbThreads);});
+			fut1.get();
+			fut2.get();
 		}
 		else {
 			(*this)(theArray, first, pivot - 1);
@@ -50,6 +55,29 @@ public:
 			}
 		}
 		return first;
+	}
+	//private:
+	///// stores maximum number of threads
+	std::size_t numbThreads = 0;
+
+    void quickSort(T& theArray, std::size_t first, std::size_t last, std::size_t nThreads){
+        if (last <= first ||  last >= theArray.size() ) return;
+		std::size_t pivot = (first + last ) >> 1;
+
+		//partition
+		pivot = pPartition(theArray,first,last,pivot);
+		if ((last - first) > SWITCH_SIZE && --nThreads >0 ) {
+			//threading
+			auto fut1 = std::async(std::launch::async,[&]() {return quickSort(theArray, first,pivot,--numbThreads);});
+			auto fut2 = std::async(std::launch::async,[&]() {return quickSort(theArray, pivot+1,last,--numbThreads);});
+			fut1.get();
+			fut2.get();
+		}
+		else {
+			quickSort(theArray, first, pivot - 1,nThreads);
+			quickSort(theArray, pivot + 1, last,nThreads);
+		}
+		return;
 	}
 };
 #endif

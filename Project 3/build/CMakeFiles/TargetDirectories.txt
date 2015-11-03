@@ -1,0 +1,2 @@
+/home/student/Documents/Project 3/build/CMakeFiles/mytest.dir
+/home/student/Documents/Project 3/build/CMakeFiles/quicksort.dir

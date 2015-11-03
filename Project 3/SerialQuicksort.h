@@ -11,15 +11,15 @@ public:
 	void operator()(T& theArray, std::size_t first, std::size_t last) {
 		if (last <= first || last >= theArray.size()) return;
 		std::size_t pivot = (first + last) >> 1;
-		
+
 		//partition
-		pivot = pPartition(theArray, first, last, pivot);	
-		
+		pivot = pPartition(theArray, first, last, pivot);
+
 		// recursive calls
 			(*this)(theArray, first, pivot-1);
 			(*this)(theArray, pivot+1, last);
-			
-		
+
+
 	}
 	////////////////////////////////////////////////////////
 	void show(T& arr, int first, int last) {
@@ -42,6 +42,7 @@ public:
 		}
 		return first;
 	}
+
 };
 
 #endif

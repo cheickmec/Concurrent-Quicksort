@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/student/Documents/Project 3/build/tester.cpp
+random
+-
+vector
+-
+chrono
+-
+iostream
+-
+ConcurrentQuicksort.h
+/home/student/Documents/Project 3/build/ConcurrentQuicksort.h
+SerialQuicksort.h
+/home/student/Documents/Project 3/build/SerialQuicksort.h
+fstream
+-
+iomanip
+-
+
