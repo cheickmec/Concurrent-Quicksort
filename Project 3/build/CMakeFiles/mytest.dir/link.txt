@@ -1,1 +1,0 @@
-/usr/bin/c++   -pthread   CMakeFiles/mytest.dir/tester.cpp.o  -o mytest -rdynamic 

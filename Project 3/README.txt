@@ -35,3 +35,8 @@ List Size                Sequential Time (s)                          Concurrent
 10000             0.17815        0.222454     0.206616          0.110755       0.151423     0.133348   
 100000            2.14821        2.38503      2.2054            1.0419         1.11963      1.06739    
 1000000           25.6446        27.6376      26.4366           12.126         12.8952      12.4336
+
+Above is a sample output of the program. It can be noticed that the multithreading becomes more
+efficient after 1000 size container. For the 100 thousand and 1 million case, the concurrent version
+is twice as fast as the sequential one.
+An output to a file named "mydata.txt" is generated at every run of the program.

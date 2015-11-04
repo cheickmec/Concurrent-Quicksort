@@ -1,4 +1,3 @@
-
 #include <random>
 #include <vector>
 #include <chrono>
@@ -7,13 +6,13 @@
 #include "SerialQuicksort.h"
 #include <fstream>
 #include <iomanip>
+#include <cassert>
 
 template <typename T>
 bool isSorted(T& theList, std::size_t first, std::size_t last) {
 	if (first == last) return true;
 	if (first < last) {
 		unsigned long int i = 0;
-	//	auto init = theList[i];
 		for (; i < last; ++i){
 			if (theList[i] > theList[i + 1]) return false;
 		}
@@ -44,21 +43,21 @@ private:
 typedef std::vector<double> ArrayType;
 //====================MAIN=================================================//
 int main() {
-	//std::ofstream std::cout;
-	//std::cout.open("mydata.txt", std::ios::out);
+	std::ofstream fout;
+	fout.open("mydata.txt", std::ios::out);
 /////////////////////////  table header //////////////////////////////////////////////////////
-	std::cout << "List Size" << std::setw(35) <<std::internal<< "Sequential Time (s)"  <<std::setw(45) << std::internal << "Concurrent Time (s)" << std::endl;	//
-	std::cout << "         " << std::setw(15)<< std::internal << "min" << std::setw(15) << std::internal << "max" << std::setw(15) << std::internal << "average" << std::setw(15) <<
+	fout << "List Size" << std::setw(35) <<std::internal<< "Sequential Time (s)"  <<std::setw(45) << std::internal << "Concurrent Time (s)" << std::endl;	//
+	fout << "         " << std::setw(15)<< std::internal << "min" << std::setw(15) << std::internal << "max" << std::setw(15) << std::internal << "average" << std::setw(15) <<
 	std::setw(15)<< "min" << std::setw(15) << "max" << std::setw(15) << "average" << std::endl;		//
-	std::cout << "---------"<<std::setw(16)<<"-----"<<std::setw(15) <<"-----"<<std::setw(14)<<"-------"<<std::setw(16)<<"-----"<<std::setw(15)<<"-----"<<std::setw(14)<<"-------" << std::endl;		//
+	fout << "---------"<<std::setw(16)<<"-----"<<std::setw(15) <<"-----"<<std::setw(14)<<"-------"<<std::setw(16)<<"-----"<<std::setw(15)<<"-----"<<std::setw(14)<<"-------" << std::endl;		//
 //////////////////////////////////////////////////////////////////////////////////////////////
 //------------------------------------------------------------------------------------------//
 	ConcurrentQuicksort<ArrayType> cSorter;
 	SerialQuicksort<ArrayType> sSorter;
-	const std::size_t sampleSize = 5;
+	const std::size_t sampleSize = 10;
 	long N;
 
-	for ( N = 10; N <= 100000; N *= 10) {
+	for ( N = 10; N <= 1000000; N *= 10) {
 ////////////////////////////////////////////////////////////////////////////////
 		std::chrono::time_point<std::chrono::system_clock> start, end;
 		std::chrono::duration<double> elapsed_seconds1(0),elapsed_seconds2(0);
@@ -83,7 +82,7 @@ int main() {
 			max1 = max1 >= (end - start) ? max1 : (end - start);
 			if (i == 0) min1 = elapsed_seconds1;
 			min1 = min1 <= (end - start) ? min1 : (end - start);
-			//std::cout << isSorted(myarray1, 0, myarray1.size() - 1);
+			assert(isSorted(myarray1, 0, myarray1.size() - 1));
 			/////////////// timing of concurrent ////////////////////////////////
 			start = std::chrono::system_clock::now();
 			cSorter(myarray2, 0, myarray2.size() - 1);
@@ -92,19 +91,20 @@ int main() {
 			max2 = max2 >= (end - start) ? max2 : (end - start);
 			if (i == 0) min2 = elapsed_seconds2;
 			min2 = min2 <= (end - start) ? min2 : (end - start);
+            assert(isSorted(myarray1, 0, myarray1.size() - 1));
 
 		}
 
-		std::cout <<std::setw(18)<<std::left<< N << std::setw(15)<< min1.count() << std::setw(13) <<max1.count()<<std::setw(18)<<elapsed_seconds1.count()/sampleSize;
-		std::cout << std::setw(15) << min2.count() << std::setw(13) << max2.count() << std::setw(12) << elapsed_seconds2.count()/sampleSize;
+		fout <<std::setw(18)<<std::left<< N << std::setw(15)<< min1.count() << std::setw(13) <<max1.count()<<std::setw(18)<<elapsed_seconds1.count()/sampleSize;
+		fout << std::setw(15) << min2.count() << std::setw(13) << max2.count() << std::setw(12) << elapsed_seconds2.count()/sampleSize;
 
-		diff1 = elapsed_seconds1 / sampleSize;
-		diff2 = elapsed_seconds2/sampleSize;
-		std::cout/* << "d: "*/<<diff1.count()/diff2.count()<<std::endl;
+		//diff1 = elapsed_seconds1 / sampleSize;
+		//diff2 = elapsed_seconds2/sampleSize;
+		fout/* << "d: "<<diff1.count()/diff2.count()*/<<std::endl;
 
 	}
-	//std::cout.close();
-	//std::cout << "DONE" << std::endl;
-    std::cout << SWITCH_SIZE<<std::endl;
+	fout.close();
+	std::cout << "DONE" << std::endl;
+    //std::cout << SWITCH_SIZE<<std::endl;
 	return 0;
 }
