@@ -1,10 +1,9 @@
-# Concurrent-Quicksort
-# Concurrent-Quicksort
+
 =====================================================================================|
-My system info					        			     |
-====|Processor: Intel(R) Core(TM) i5-5200U CPU @ 2.20Ghz 2.20 GHz		     |
-====|RAM: 8.00 GB							             |
-====|OS: 64-bit Windows 10, x64-based processor					     |
+My system info					        			                                               |
+====|Processor: Intel(R) Core(TM) i5-5200U CPU @ 2.20Ghz 2.20 GHz		                 |
+====|RAM: 8.00 GB							                                                       |
+====|OS: 64-bit Windows 10, x64-based processor					                             |
 =====================================================================================|
 The program was initialy tested for the maximum threads allocated by the OS. 
 A couple of runs revealed that number to be between 675 and 700 threads. At such
