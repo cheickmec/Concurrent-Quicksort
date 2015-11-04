@@ -4,7 +4,7 @@
 #include <future>
 #include <algorithm>
 
-const unsigned long SWITCH_SIZE = 610;
+const unsigned long SWITCH_SIZE = 6000;
 static bool create =false;
 //pass number of threads as an argument
 //lower bound 300

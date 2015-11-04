@@ -24,13 +24,14 @@ number of threads was fixed at 650 because it yielded better results overall.
 
 Next, the container size requiring thread creation was to be adjusted to avoid 
 unecessary thread creation for small container sizes. A desirable value happened to
-be 610 after running some tests. The results were remarkably better for big containers.
+be 6000 after running some tests. The results were remarkably better for big containers.
 
 List Size                Sequential Time (s)                          Concurrent Time (s)
                      min            max        average            min            max        average
 ---------           -----          -----       -------           -----          -----       -------
-10                5.46e-05       0.0001638    8.995e-05         4.81e-05       0.0001801    8.425e-05
-100               0.0008127      0.001554     0.00108769        0.0008155      0.0015549    0.0010712
-1000              0.0099408      0.0133651    0.0106994         0.006516       0.0138103    0.00892692
-10000             0.132187       0.178236     0.147821          0.0719737      0.100348     0.0806966
-100000            1.67756        1.74689      1.7188            0.876486       1.14038      0.928192
+10                4.29e-05       5.59e-05     4.982e-05         4.34e-05       5.6e-05      5.024e-05 
+100               0.0012326      0.0120211    0.00345726        0.0012577      0.0014084    0.0013462  
+1000              0.0162889      0.0449601    0.0308797         0.0166794      0.0262041    0.0219854  
+10000             0.17815        0.222454     0.206616          0.110755       0.151423     0.133348   
+100000            2.14821        2.38503      2.2054            1.0419         1.11963      1.06739    
+1000000           25.6446        27.6376      26.4366           12.126         12.8952      12.4336

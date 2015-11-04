@@ -55,10 +55,10 @@ int main() {
 //------------------------------------------------------------------------------------------//
 	ConcurrentQuicksort<ArrayType> cSorter;
 	SerialQuicksort<ArrayType> sSorter;
-	const std::size_t sampleSize = 10;
+	const std::size_t sampleSize = 5;
 	long N;
 
-	for ( N = 1000000; N <= 1000000; N *= 10) {
+	for ( N = 10; N <= 100000; N *= 10) {
 ////////////////////////////////////////////////////////////////////////////////
 		std::chrono::time_point<std::chrono::system_clock> start, end;
 		std::chrono::duration<double> elapsed_seconds1(0),elapsed_seconds2(0);
@@ -98,13 +98,13 @@ int main() {
 		std::cout <<std::setw(18)<<std::left<< N << std::setw(15)<< min1.count() << std::setw(13) <<max1.count()<<std::setw(18)<<elapsed_seconds1.count()/sampleSize;
 		std::cout << std::setw(15) << min2.count() << std::setw(13) << max2.count() << std::setw(12) << elapsed_seconds2.count()/sampleSize;
 
-		/*diff1 = elapsed_seconds1 / sampleSize;
-		diff2 = elapsed_seconds2/sampleSize;*/
-		std::cout/* << "d: "<< diff1.count()/diff2.count()*/ <<std::endl;
+		diff1 = elapsed_seconds1 / sampleSize;
+		diff2 = elapsed_seconds2/sampleSize;
+		std::cout/* << "d: "*/<<diff1.count()/diff2.count()<<std::endl;
 
 	}
 	//std::cout.close();
 	//std::cout << "DONE" << std::endl;
-    //std::cout << SWITCH_SIZE<<std::endl;
+    std::cout << SWITCH_SIZE<<std::endl;
 	return 0;
 }
