@@ -8,6 +8,21 @@
 #include <fstream>
 #include <iomanip>
 
+template <typename T>
+bool isSorted(T& theList, std::size_t first, std::size_t last) {
+	if (first == last) return true;
+	if (first < last) {
+		unsigned long int i = 0;
+	//	auto init = theList[i];
+		for (; i < last; ++i){
+			if (theList[i] > theList[i + 1]) return false;
+		}
+		return true;
+	}
+	std::cout << "unproper range. last must be greater or equal to first" << std::endl;
+	return false;
+}
+
 // a normal distributed random number generator
 class fill_normal
 {
@@ -43,7 +58,7 @@ int main() {
 	const std::size_t sampleSize = 10;
 	long N;
 
-	for ( N = 10; N <= 1000000; N *= 10) {
+	for ( N = 1000000; N <= 1000000; N *= 10) {
 ////////////////////////////////////////////////////////////////////////////////
 		std::chrono::time_point<std::chrono::system_clock> start, end;
 		std::chrono::duration<double> elapsed_seconds1(0),elapsed_seconds2(0);
@@ -68,7 +83,7 @@ int main() {
 			max1 = max1 >= (end - start) ? max1 : (end - start);
 			if (i == 0) min1 = elapsed_seconds1;
 			min1 = min1 <= (end - start) ? min1 : (end - start);
-
+			//std::cout << isSorted(myarray1, 0, myarray1.size() - 1);
 			/////////////// timing of concurrent ////////////////////////////////
 			start = std::chrono::system_clock::now();
 			cSorter(myarray2, 0, myarray2.size() - 1);
@@ -83,13 +98,13 @@ int main() {
 		std::cout <<std::setw(18)<<std::left<< N << std::setw(15)<< min1.count() << std::setw(13) <<max1.count()<<std::setw(18)<<elapsed_seconds1.count()/sampleSize;
 		std::cout << std::setw(15) << min2.count() << std::setw(13) << max2.count() << std::setw(12) << elapsed_seconds2.count()/sampleSize;
 
-		diff1 = elapsed_seconds1 / sampleSize;
-		diff2 = elapsed_seconds2/sampleSize;
-		std::cout << "d: "<< diff1.count()/diff2.count() <<std::endl;
+		/*diff1 = elapsed_seconds1 / sampleSize;
+		diff2 = elapsed_seconds2/sampleSize;*/
+		std::cout/* << "d: "<< diff1.count()/diff2.count()*/ <<std::endl;
 
 	}
 	//std::cout.close();
-	std::cout << "DONE" << std::endl;
-    std::cout << create<<std::endl;
+	//std::cout << "DONE" << std::endl;
+    //std::cout << SWITCH_SIZE<<std::endl;
 	return 0;
 }

@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9AAE4A1C-F211-4540-B826-06AF6B30A06F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Porject3</RootNamespace>
+    <RootNamespace>Project3</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <ProjectName>Project 3</ProjectName>
   </PropertyGroup>
@@ -143,6 +143,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ConcurrentQuicksort.h" />
+    <ClInclude Include="SerialQuicksort.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Lab.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="tester.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
